@@ -8,3 +8,8 @@ def home(request):
 def details(request):
 
     return render(request,"listings/details.html")
+
+
+def shop(request):
+
+    return render(request,"listings/shop.html")
