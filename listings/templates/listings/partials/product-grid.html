@@ -1,0 +1,12 @@
+<div class="flex flex-col w-full max-w-7xl my-12">
+  <div class="content flex justify-between items-center py-4">
+      <h2>{{title}}</h2>
+      <h2><a href="#" class="underline text-slate-700">Voir tout</a></h2>
+  </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-9 gap-y-12 place-items-center  ">
+    {% for i in "123"|make_list %} 
+      {% include "listings/partials/product.html" %} 
+    {% endfor %}
+  </div>
+</div>
