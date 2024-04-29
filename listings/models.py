@@ -16,7 +16,7 @@ class Category(models.Model):
 
     def save(self,*args,**kwargs):
 
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.name)
 
         super().save(*args,**kwargs)
 class Product(models.Model):
@@ -27,6 +27,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(default=0)
     sku = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=255,null=True, blank=True)
+    image = models.ImageField(upload_to="products/images/",null=True, blank=True)
     class Meta:
         verbose_name_plural = 'Products'
 
@@ -35,7 +36,7 @@ class Product(models.Model):
 
     def save(self,*args,**kwargs):
 
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.name)
 
         super().save(*args,**kwargs)
 class ProductImage(models.Model):
@@ -54,7 +55,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
-    
+
     def get_total_price(self):
         return self.product.price * self.quantity
 

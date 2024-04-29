@@ -19,6 +19,7 @@
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
+      <script src="https://unpkg.com/htmx.org@1.9.4"></script>
     <title>Myshop mon site de ecommerce en python</title>
     {% load django_browser_reload %}
   </head>
@@ -40,9 +41,15 @@
           <a href="/#">Cabrel Store</a>
         </h2>
         <div class="navigation flex gap-2 text-sm">
-          <h3><a href="#">Search</a></h3>
-          <h3><a href="#">Account</a></h3>
-          <h3><a href="#">Cart</a></h3>
+          <h3><a href="/shop">Shop</a></h3>
+          {% if request.user.is_authenticated %}
+          <form action="#" hx-target="">
+            <h3><a href="#">Logout</a></h3>
+          </form>
+          {% else %}
+          <h3><a href="/signin">Logout</a></h3>
+          {% endif %}
+          <h3><a href="/cart">Cart</a></h3>
         </div>
       </div>
     </div>
@@ -89,5 +96,7 @@
 
     {% django_browser_reload_script %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    {% block script %}
+    {% endblock %}
   </body>
 </html>

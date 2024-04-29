@@ -1,23 +1,23 @@
 {% load static %}
 <div
-  class="flex text-slate-500 flex-col max-w-[23rem] items-center gap-3 justify-center m-4">
+  class="flex text-slate-500 flex-col w-[20rem] md:w-[23rem] items-center gap-3 justify-center m-4">
   <div class="flex w-full h-[28rem] border p-2 rounded-lg bg-[#f9f9f9]">
-    <a href="#" class="w-full block">
+    <a href="/shop/details/{{slug}}" class="w-full block">
       <div class="w-full flex items-center justify-center h-full">
         <img
-          src="{% static 'images/riz-viange.png' %}"
+          src="{{image.url}}"
           alt="Flowbite"
-          class="w-ful object-contain h-36" />
+          class="w-ful object-contain h-44" />
       </div>
     </a>
   </div>
   <div class="datas gap-2 flex items-center justify-between w-full">
     <h4 class="truncate text-sm font-normal">
-      Lorem dazddadz dazdipsum dolor sit amet, consectetur adipisicing.
+      {{title}}
     </h4>
     <div class="flex price font-semibold items-center gap-2">
-      <h5 class="line-through">540$</h5>
-      <h5 class="font-extrabold">455$</h5>
+      <h5 class="line-through">5400</h5>
+      <h5 class="font-extrabold">{{price}}</h5>
     </div>
   </div>
 </div>
