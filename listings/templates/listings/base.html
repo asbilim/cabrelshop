@@ -43,11 +43,13 @@
         <div class="navigation flex gap-2 text-sm">
           <h3><a href="/shop">Shop</a></h3>
           {% if request.user.is_authenticated %}
-          <form action="#" hx-target="">
-            <h3><a href="#">Logout</a></h3>
-          </form>
+          <form id="submit"  method="POST" hx-post="{% url 'signout' %}" hx-trigger="submit" hx-target="">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        
           {% else %}
-          <h3><a href="/signin">Logout</a></h3>
+          <h3><a href="/signin">signin</a></h3>
           {% endif %}
           <h3><a href="/cart">Cart</a></h3>
         </div>
@@ -96,6 +98,17 @@
 
     {% django_browser_reload_script %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script>
+      document.addEventListener('htmx:afterRequest', function(event) {
+          const xhr = event.detail.xhr;
+          const response = JSON.parse(xhr.responseText);
+      
+          if (response.redirect) {
+              window.location.href = "{% url 'signin' %}";
+          }
+      });
+      </script>
+      
     {% block script %}
     {% endblock %}
   </body>

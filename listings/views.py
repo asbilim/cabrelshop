@@ -42,7 +42,10 @@ def signin(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        print(username,password)
+
         user = authenticate(request,username=username,password=password)
+        print(user)
         if user:
             login(request,user)
             return JsonResponse(data={"status": "success", "message": "Redirecting..."})
@@ -65,6 +68,7 @@ def signup(request):
         password = request.POST.get('password')
         confirm = request.POST.get('confirm')
 
+        print(password)
         if not (password or confirm or username):
             return JsonResponse(data={"status":"error","message":"<p class='text-red-500'>all fields are required</p>"})
         if confirm != password:
@@ -73,6 +77,8 @@ def signup(request):
         
         user,created = get_user_model().objects.get_or_create(username=username, password=password)
 
+    
+        user.is_active = True
         if not created:
             return JsonResponse(data={"status":"error","message":"<p class='text-red-500'>user already exists</p>"})
 
@@ -86,7 +92,9 @@ def signup(request):
 
 
 def signout(request):
-
     logout(request)
 
-    return JsonResponse(data={"status": "success", "message":"logout successful"})
+    if request.headers.get('HX-Request'):
+        return JsonResponse(data={"status": "success", "redirect": True})
+
+    return redirect("signin")
