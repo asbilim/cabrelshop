@@ -1,7 +1,7 @@
 {% extends "listings/base.html" %} {% block content %}
 
 <section
-  class="bg-center bg-no-repeat bg-cover bg-[url('https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg')] bg-gray-700 bg-blend-multiply">
+  class="bg-center  bg-no-repeat bg-cover bg-[url('https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg')] bg-gray-700 bg-blend-multiply">
   <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
     <h1
       class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
@@ -15,7 +15,7 @@
     <div
       class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
       <a
-        href="#"
+        href="/shop"
         class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-sate-300">
         Decouvrir
         <svg
@@ -41,8 +41,8 @@
   </div>
 </section>
 <div class="flex flex-col w-full gap-12 items-center justify-center">
-  {% include "listings/partials/product-grid.html" with title="nos repas" %}
-  {% include "listings/partials/product-grid.html" with title="nos boissons" %}
-  {% include "listings/partials/product-grid.html" with title="combinaisons" %}
+  {% include "listings/partials/product-grid.html" with title="nos repas" products=food  %}
+  {% include "listings/partials/product-grid.html" with title="nos boissons" products=drinks %}
+  {% include "listings/partials/product-grid.html" with title="combinaisons" products=mixte %}
 </div>
 {% endblock %}
