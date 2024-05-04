@@ -1,0 +1,51 @@
+{% extends "listings/base.html" %}
+{% block content %}
+{% load static %}
+
+<div id="cart-items" class="relative overflow-x-auto flex items-center justify-center flex-col gap-24 mt-16">
+    <h2 class="text-lg font-bold text-center mb-4">Mon Panier</h2>
+
+    {% if cart_items %}
+        <table class="w-full text-sm max-w-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Produit</th>
+                    <th scope="col" class="px-6 py-3">Prix</th>
+                    <th scope="col" class="px-6 py-3">Quantité</th>
+                    <th scope="col" class="px-6 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ item.product.name }}
+                    </th>
+                    <td class="px-6 py-4">FCFA {{ item.product.price }}</td>
+                    <td class="px-6 py-4">{{ item.quantity }}</td>
+                    <td class="px-6 py-4">
+                        <div class="quantity-controls flex gap-2 mx-3">
+                            <button hx-post="{% url 'update_cart_item' item.id 'decrease' %}" hx-target="#cart-items" class="bg-slate-900 px-3 text-slate-200 py-2">-</button>
+                            <button hx-post="{% url 'update_cart_item' item.id 'increase' %}" hx-target="#cart-items" class="bg-slate-900 px-3 text-slate-200 py-2">+</button>
+                            <button hx-post="{% url 'remove_cart_item' item.id %}" hx-target="#cart-items" class="bg-red-500 px-3 text-slate-200 py-2">Enlever</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="text-center mt-4">Total: FCFA {{ total_price }}</h3>
+    {% else %}
+        <p class="text-center">Votre panier est vide.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('htmx:configRequest', function (event) {
+        event.detail.headers['X-CSRFToken'] = document.cookie.match(/csrftoken=([^;]*)/)[1];
+    });
+</script>
+{% endblock %}
